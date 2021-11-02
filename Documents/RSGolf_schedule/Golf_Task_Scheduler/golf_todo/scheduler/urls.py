@@ -10,6 +10,8 @@ from django.conf.urls import url
 urlpatterns = [
   path('', views.home, name='home'),
   path('index.html', views.home, name='home'),
-  path('log_entry.html', views.log_entry, name='log_entry'),
-  path('view_edit_tasks.html', views.edit_task, name='edit_task'),
+  path('log.html', views.log, name='log'),
+  path('task.html', views.tasks, name='task'),
+  path('export/', views.export, name='export'),
+  
 ]

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Royal Scot Golf Maintenance Scheduler</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style_log.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+  </head>
+  <body id="body">
+    <div id="left-column">
+      <div class="button-outer-wrapper">
+        <div class="button-inner-wrapper">
+          <div class="button-wrapper"><a class='button' href="index.html">Home</a></div>
+          <div class="button-wrapper"><a class='button' href="{% url 'export' %}">Download Log File</a></div>
+        </div>
+      </div>  
+    </div>
+    <div id="to-do-dash-container">
+      <div id="to-do-dash">
+        Completed Tasks <br><br>
+        <table id="to-do-table">
+            {% for obj in logs %}
+              <tr class="to-do-row">
+                <td class="to-do-cell">
+                  {{ obj.task }}
+                </td>
+                <td class="to-do-cell">
+                  {{ obj.hole }}
+                </td>
+                <td class="to-do-cell">
+                  {{ obj.date_completed }}
+                </td>
+              </tr>
+            {% endfor %}
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

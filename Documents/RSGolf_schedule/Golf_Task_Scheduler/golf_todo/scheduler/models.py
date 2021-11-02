@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import date
+from datetime import date, timedelta
 from django.utils import timezone
 from django.forms import ModelForm
 
@@ -12,9 +12,7 @@ class Task(models.Model):
 class Log(models.Model):
   task = models.CharField(max_length=200)
   hole = models.CharField(max_length=200)
-  #equipment = models.CharField(max_length=200)
-  #hours = models.IntegerField(default=0)
-  date_completed = models.DateTimeField(default='2001-01-01 11:11:11')
+  date_completed = models.DateField(default=(date.today() +timedelta(days = 100)))
 
 class Equipment(models.Model):
   equipment_name = models.CharField(max_length=200)

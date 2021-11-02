@@ -8,32 +8,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
   </head>
   <body id="body">
-    <div id="current_weather-wrapper">
-          <div id="weather-button">
-            {{ cur_temp }}&degF<br>
-            {{ cur_hum }}% humidity<br>
-            {% if prec == None %}
-              No Rain
-            {% else %}
-              {{ prec }}
-            {% endif %}
-          </div>
+    <div id="top">
+      <div id="button-outer-wrapper">
+        <div id="weather-button">
+          Max {{ maxtemp }}&degF<br>
+          Min {{ mintemp }}&degF<br>
+          {{ humidity }}% humidity<br>
+          {{ desc }}
+        </div>
+        <div class="button-inner-wrapper">
+          <div class="button-wrapper"><a class='button' href="log.html">Log</a></div>
+        </div>
+        <div class="button-inner-wrapper">
+          <div class="button-wrapper"><a class='button' href="task.html">Tasks</a></div>
+        </div>
+      </div>  
     </div>
-    <div id="chart-container">
-      <canvas id="chart" width="5" height="1" ></canvas>
-    </div>
-    <div class="button-outer-wrapper">
-      <div class="button-inner-wrapper">
-        <div class="button-wrapper"><a class='button' href="log_entry.html">Log</a></div>
-        <div class="button-wrapper"><a class='button' href="view_edit_tasks.html">Schedule</a></div>
+    <div id="outer-chart-container">
+      <div id="chart-container">
+        <canvas id="chart" width="750px" height="150px" ></canvas>
       </div>
     </div>
-    <div id="to-do-dash-container">
-      <div id="to-do-dash">
-        DUE TODAY <br>
-        <table id="to-do-table">
-            {% for obj in tasks %}
-              {% if obj.next_due_date < today %}
+    <div id="task-bar">
+      <div id="to-do-dash-container">
+        <div id="to-do-dash">
+          DUE TODAY <br>
+          <table id="to-do-table">
+              {% for obj in tasks %}
                 <tr class="to-do-row">
                   <td class="to-do-cell">
                     {{ obj.task }}
@@ -49,17 +50,15 @@
                     </form>
                   </td>
                 </tr>
-              {% endif %}
-            {% endfor %}
-        </table>
+              {% endfor %}
+          </table>
+        </div>
       </div>
-    </div>
-    <div id="dun-dash-container">
-      <div id="dun-dash">
-        DUN LAST 2 DAYS <br>
-        <table id="dun-table">
-            {% for obj in logs %}
-              {% if obj.date_completed > dun_time %}
+      <div id="dun-dash-container">
+        <div id="dun-dash">
+          DUN LAST 2 DAYS<br>
+          <table id="dun-table">
+              {% for obj in logs %}
                 <tr class="to-do-row">
                   <td class="to-do-cell">
                     {{ obj.task }}
@@ -71,15 +70,15 @@
                     {{ obj.date_completed }}
                   </td>
                 </tr>
-              {% endif %}
-            {% endfor %}
-        </table>
+              {% endfor %}
+          </table>
+        </div>
       </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
     <script type="text/javascript">
       var time = {{ time }};
-      var prec = {{ prec_hourly }};
+      var prec = {{ chance_rain }};
       //document.getElementById('test').innerHTML = prec;
       let ctx = document.getElementById("chart").getContext("2d");
       let chart = new Chart(ctx, {
