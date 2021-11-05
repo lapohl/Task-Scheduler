@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Royal Scot Golf Maintenance Scheduler</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style_task.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+  </head>
+  <body id="body">
+    <div id="left-column">
+      <div class="button-outer-wrapper">
+        <div class="button-inner-wrapper">
+          <div class="button-wrapper"><a class='button' href="index.html">Home</a></div>
+        </div>
+      </div>  
+    </div>
+    <div id="to-do-dash-container">
+      <div id="to-do-dash">
+        <div id="top-row">
+          Tasks <br><br>
+        <table id="to-do-table">
+            {% for obj in tasks %}
+              <tr class="to-do-row">
+                <td class="to-do-cell">
+                  {{ obj.task }}
+                </td>
+                <td class="to-do-cell">
+                  {{ obj.hole }}
+                </td>
+                <td class="freq-cell" class="to-do-cell">
+                  <div id="freq-{{ obj.id }}" onclick="changeFreq('{{ obj.id }}')" class="current-freq">{{ obj.frequency_days }}</div>
+                  <div class="freq-form-wrapper" id="freq-form-{{ obj.id }}"> 
+                    <form action='' method="POST">
+                      {% csrf_token %} 
+                      <input type="hidden" name="id" value="{{ obj.id }}">
+                      <input class="to-do-cell" type="text" name="freq-input">
+                      <input class="to-do-cell" type="submit" value="change">
+                    </form>
+                  </div>
+                </td>
+                <td class="to-do-cell">
+                 <div id="duedate-{{ obj.id }}" onclick="changeDueDate('{{ obj.id }}')" class="current-duedate">{{ obj.next_due_date }}</div>
+                  <div class="duedate-form-wrapper" id="duedate-form-{{ obj.id }}">
+                    <form action='' method="POST">
+                      {% csrf_token %} 
+                      <input type="hidden" name="id" value="{{ obj.id }}">
+                      <input class="to-do-cell" type="text" name="next-due-date">
+                      <input class="to-do-cell" type="submit" value="change">
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+        </table>
+      </div>
+    </div>
+    <script src="{% static 'log.js' %}"></script>
+  </body>
+</html>

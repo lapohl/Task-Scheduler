@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Royal Scot Golf Maintenance Scheduler</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+  </head>
+  <body id="body">
+    <div id="top">
+      <div id="button-outer-wrapper">
+        <div id="weather-button">
+          Max {{ maxtemp }}&degF<br>
+          Min {{ mintemp }}&degF<br>
+          {{ humidity }}% humidity<br>
+          {{ desc }}
+        </div>
+        <div class="button-inner-wrapper">
+          <div class="button-wrapper"><a class='button' href="log.html">Log</a></div>
+        </div>
+        <div class="button-inner-wrapper">
+          <div class="button-wrapper"><a class='button' href="task.html">Tasks</a></div>
+        </div>
+      </div>  
+    </div>
+    <div id="outer-chart-container">
+      <div id="chart-container">
+        <canvas id="chart" width="750px" height="150px" ></canvas>
+      </div>
+    </div>
+    <div id="task-bar">
+      <div id="to-do-dash-container">
+        <div id="to-do-dash">
+          DUE TODAY <br>
+          <table id="to-do-table">
+              {% for obj in tasks %}
+                <tr class="to-do-row">
+                  <td class="to-do-cell">
+                    {{ obj.task }}
+                  </td>
+                  <td class="to-do-cell">
+                    {{ obj.hole }}
+                  </td>
+                  <td class="mark-complete">
+                    <form action='' method="POST">
+                      {% csrf_token %} 
+                      <input type="hidden" name="id" value="{{ obj.id }}">
+                      <input id='dun' type="submit" value="DUN">
+                    </form>
+                  </td>
+                </tr>
+              {% endfor %}
+          </table>
+        </div>
+      </div>
+      <div id="dun-dash-container">
+        <div id="dun-dash">
+          DUN LAST 2 DAYS<br>
+          <table id="dun-table">
+              {% for obj in logs %}
+                <tr class="to-do-row">
+                  <td class="to-do-cell">
+                    {{ obj.task }}
+                  </td>
+                  <td class="to-do-cell">
+                    {{ obj.hole }}
+                  </td>
+                  <td class="to-do-cell">
+                    {{ obj.date_completed }}
+                  </td>
+                </tr>
+              {% endfor %}
+          </table>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
+    <script type="text/javascript">
+      var time = {{ time }};
+      var prec = {{ chance_rain }};
+      //document.getElementById('test').innerHTML = prec;
+      let ctx = document.getElementById("chart").getContext("2d");
+      let chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: time,
+          datasets: [{
+            label: "Chance of Precipitation Next 12 Hours",
+            data: [{
+              x: 1,
+              y: prec[0]
+            }, {
+              x: 2,
+              y: prec[1]
+            }, {
+              x: 3,
+              y: prec[2]
+            }, {
+              x: 4,
+              y: prec[3]
+            }, {
+              x: 5,
+              y: prec[4]
+            }, {
+              x: 6,
+              y: prec[5]
+            }, {
+              x: 7,
+              y: prec[6]
+            }, {
+              x: 8,
+              y: prec[7]
+            }, {
+              x: 9,
+              y: prec[8]
+            }, {
+              x: 10,
+              y: prec[9]
+            }, {
+              x: 11,
+              y: prec[10]
+            }, {
+              x: 12,
+              y: prec[11]
+            }],
+            backgroundColor: [
+            'rgba(192,168,0,.7)',
+            'rgba(192,168,0,.7)',
+            'rgba(192,168,0,.7)',
+            'rgba(192,168,0,.7)',
+            'rgba(192,168,0,.7)',
+            'rgba(192,168,0,.7)',
+            'rgba(192,168,0,.7)',
+            'rgba(192,168,0,.7)',
+            'rgba(192,168,0,.7)',
+            'rgba(192,168,0,.7)',
+            'rgba(192,168,0,.7)',
+            'rgba(192,168,0,.7)'
+          ],
+          borderColor: [
+            'rgba(192,168,0,1)',
+            'rgba(192,168,0,1)',
+            'rgba(192,168,0,1)',
+            'rgba(192,168,0,1)',
+            'rgba(192,168,0,1)',
+            'rgba(192,168,0,1)',
+            'rgba(192,168,0,1)',
+            'rgba(192,168,0,1)',
+            'rgba(192,168,0,1)',
+            'rgba(192,168,0,1)',
+            'rgba(192,168,0,1)',
+            'rgba(192,168,0,1)'
+          ]
+          }]
+        },
+        options: {
+          legend: {
+            labels: {
+              fontColor: 'white'
+            }
+          },
+          scales: {
+            yAxes: [{
+              display: true,
+              gridLines:{
+                color: 'rgba(0, 192, 120,.5)'
+              },
+              ticks: {
+                fontColor: "white",
+                suggestedMax: 100,
+                suggestedMin: 0,
+                precision:  0,
+              }
+            }],
+            xAxes: [{
+              display:true,
+              ticks: {
+                fontColor: 'white'
+              },
+              gridLines:{
+                color: 'rgba(0, 192, 120,.5)'
+              }
+            }]
+          }
+        }
+      });
+      Chart.defaults.global.defaultFontFamily  = 'Bree Serif';
+    </script>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+#body {
+  background-color: #046413;
+  font-family: 'Bree Serif';
+}
+
+.button-outer-wrapper {
+  width:  100%;
+  height: 100%;
+}
+
+.button-inner-wrapper {
+  position: absolute;
+  float: top;
+  margin-left: 11%;
+  top: 9rem;
+}
+
+.button-wrapper {
+  height: 20%;
+  width: 40%;
+  background-color: #00a600;
+  border:  	#a2d10c 3px solid;
+  float: top;
+  margin-top: 1rem;
+  padding:  1.5rem;
+  text-align: center;
+  font-size: .75rem;
+  border-radius: 10rem;
+}
+
+.button {
+  text-decoration: none;
+  color: 	white ;
+}
+
+
+
+#to-do-dash-container { 
+  margin-left: 30%;
+  align-items: center;
+  width: 40%;
+  margin-top: 1rem;
+  float: left;
+
+}
+
+#to-do-dash {
+  background-color: #c0a800;
+  border:  	#00c078 3px solid;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  color: #006018;
+  text-align: center;
+  font-size: .75rem;
+  border-radius: 2rem;
+  align-items: center;
+}
+
+.to-do-cell {
+  font-size: .75rem;
+  padding-left: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+#to-do-table {
+  margin-left: 10%;
+}
+
+#log-file{
+  text-decoration: none;  
+}
+

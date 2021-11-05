@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>View / Edit Tasks</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style_edit.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+  </head>
+  <body id='body'>
+    <div class="button-outer-wrapper">
+      <div class="button-inner-wrapper">
+        <div class="button-wrapper">
+          <a class="button" href="index.html">Home</a>
+        </div>
+          <div class="button-wrapper">
+            <button id="add_task_modal_btn">Add Job</button>
+          </div>
+      </div>
+    </div>
+    <div id="add_task_modal" class="modal">
+      <div class="modal-content">
+        <span class="close">Cancel</span>
+        <table id="add-task-table">
+          <form action="" method="POST">
+            <tr class="add-task-row">
+              <td class="add-task-cell">Job Type</td>
+              <td class="add-task-cell">
+                <div class="btn-group">
+                  {% for obj in task_types %}
+                  <label class="btn-grp-button" for=obj.id> {{ obj.task }}</label> 
+                  <input type="radio" id=obj.id name=new_task value={{obj.task}}>
+                  {% endfor %}
+                  <label class="btn-grp-button" for=add>ADD</label> 
+                  <input type="radio" id=add name=new_task value="ADD">
+              </td>
+            </tr>
+            <tr class="add-task-row">
+              <td class="add-task-cell">
+                <div class="btn-group">
+                  <label class="btn-grp-button" for=add>ADD</label> 
+                  <input type="radio" id=add name=new_area value="ADD">
+                </div>
+              </td>
+            </tr>
+            <tr class="add-task-row">
+              <td class="add-task-cell">Hole</td>
+              <td class="add-task-cell">
+                <div class="btn-group">
+                  <label class="btn-grp-button" for=ins9>Inside 9</label> 
+                  <input type="radio" id=ins9 name=new_hole value="Inside 9">            
+                  
+                  <label class="btn-grp-button" for=out9>Outside 9</label> 
+                  <input type="radio" id=out9 name=new_hole value="Outside 9">            
+
+                  <label class="btn-grp-button" for=nor9>North 9</label> 
+                  <input type="radio" id=nor9 name=new_hole value="North 9">            
+
+                  <label class="btn-grp-button" for=all>ALL</label> 
+                  <input type="radio" id=all name=new_hole value="ALL">            
+                  
+                  <label class="btn-grp-button" for=add>ADD</label> 
+                  <input type="radio" id=add name=new_hole value="ADD">
+                </div>
+              </td>
+            </tr>
+            <tr class="add-task-row">
+              <td class="add-task-cell">Frequency</td>
+              <td class="add-task-cell">
+                <label class="btn-grp-text" for=freq># Days</label> 
+                <input type="text" id=freq name=new_freq value="# Days">            
+              </td>
+            </tr>
+            <tr class="add-task-row">
+              <td class="add-task-cell">
+                {{ form }}
+              </td>
+            </tr>
+          </form>
+        </table>
+      </div>
+    </div>
+    <table> 
+      <tr>
+        <th>Job ID</th>
+        <th>Job</th>
+        <th>Hole</th>
+        <th>Frequency [days]</th>
+        <th>Next Due Date</th>
+      </tr>
+      <tr></tr>
+      {%  for obj in tasks  %}
+      <tr>
+        <td>{{ obj.id }}</td>
+        <td>{{ obj.task }}</td>
+        <td>{{ obj.hole }}</td>
+        <td>
+          <div class="dropdown">
+            <button class="dropbtn">{{ obj.frequency_days }}</button>
+            <div class="dropdown-content">
+              <a class="dropdown-content-element" href="#">Change Value</a>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="dropbtn">{{ obj.next_due_date }}</button>
+            <div class="dropdown-content">
+              <a class="dropdown-content-element" href="#">Change Value</a>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="dropbtn">-</button>
+            <div class="dropdown-content"> <!-- bring out of div class-->
+            </div>
+          </div>
+        </td>
+      </tr>
+      {%  endfor  %}
+    </table>
+    <script src="{% static 'app_edit.js' %}"></script>
+  </body>
+</html>
